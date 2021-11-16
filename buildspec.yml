@@ -1,18 +1,23 @@
+version: 0.2
+
 phases:
   install:
-    runtime-versions:
-     
-      nodejs: 14
+    commands:
+      - echo Installing Mocha...
+      - npm install -g mocha
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install unit.js
   build:
     commands:
-    
-      - echo Building the Node code...
-      - cd $CODEBUILD_SRC_DIR/nodejs-app
-      - npm run test
+      - echo Build started on `date`
+      - echo Compiling the Node.js code
+      - mocha server.js
+  post_build:
+    commands:
+      - echo Build completed on `date`
 artifacts:
-  secondary-artifacts:  
-    nodejs_artifacts:
-      base-directory: nodejs-app
-      files:
+  files:
         - server.js
         - package.json
