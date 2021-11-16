@@ -1,0 +1,18 @@
+phases:
+  install:
+    runtime-versions:
+     
+      nodejs: 14
+  build:
+    commands:
+    
+      - echo Building the Node code...
+      - cd $CODEBUILD_SRC_DIR/nodejs-app
+      - npm run test
+artifacts:
+  secondary-artifacts:  
+    nodejs_artifacts:
+      base-directory: nodejs-app
+      files:
+        - server.js
+        - package.json
